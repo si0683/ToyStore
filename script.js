@@ -14,12 +14,27 @@
 // ===== 0. ЛАБОРАТОРИЯ САЙТА 🧪 =====
 // Поменяйте значение и посмотрите на сайт. Цвета, углы и шрифты — в начале style.css.
 const LAB = {
+  style: 'яркий и весёлый',   // стиль: простой и аккуратный / яркий и весёлый / тёмный / современный / уютный
+  color: 'зелёный',   // главный цвет: красный / синий / зелёный / оранжевый / фиолетовый
   siteName: 'Игрушкин',         // название: шапка, главный экран, вкладка
   sticker: 'Ура, игрушки! 🎉',   // надпись на наклейке у большой картинки
   fallingEmoji: '',              // эмодзи-дождь на главном экране, например '🧸' ('' — без дождя)
   startDark: false,             // true — сайт сразу открывается в тёмной теме
   thanksText: 'Ура! Заказ принят 🎉', // сообщение после отправки формы
 };
+
+// Варианты для LAB.style и LAB.color. Ищем по началу слова,
+// поэтому подойдут и «Тёмный», и «темный», и «синего цвета»
+const STYLES = { 'прост': 'clean', 'ярк': 'bright', 'тём': 'dark', 'тем': 'dark', 'соврем': 'modern', 'уют': 'cozy' };
+const COLORS = { 'красн': '#dc2626', 'син': '#2563eb', 'зел': '#16a34a', 'оранж': '#f97316', 'фиол': '#7c3aed' };
+
+function findOption(options, text) {
+  const word = String(text).trim().toLowerCase();
+  for (const start in options) {
+    if (word.startsWith(start)) return options[start];
+  }
+  return null; // такого варианта нет
+}
 
 // ===== 1. ПОМОЩНИКИ И ЭЛЕМЕНТЫ СТРАНИЦЫ =====
 // Короткие имена для поиска элементов: $ — один элемент, $$ — все подходящие
@@ -204,7 +219,12 @@ function applyLab() {
   $$('[data-lab="name"]').forEach(function (el) { el.textContent = LAB.siteName; });
   $$('[data-lab="sticker"]').forEach(function (el) { el.textContent = LAB.sticker; });
   document.title = LAB.siteName + ' — магазин игрушек';
-  if (LAB.startDark) document.body.classList.add('dark');
+  const style = findOption(STYLES, LAB.style) || 'bright'; // стиль не найден — родной стиль сайта
+  document.body.classList.add('style-' + style);
+  if (LAB.startDark || style === 'dark') document.body.classList.add('dark');
+  // Другой цвет ставим, только если он отличается от родного, чтобы работала и --main в style.css
+  const color = findOption(COLORS, LAB.color);
+  if (color && color !== '#16a34a') document.documentElement.style.setProperty('--main', color);
   if (LAB.fallingEmoji) startRain(LAB.fallingEmoji);
 }
 

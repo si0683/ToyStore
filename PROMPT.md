@@ -36,6 +36,7 @@
 - Тёмный оттенок и прозрачная подложка главного цвета считаются сами: `color-mix(in srgb, var(--main) 72%, black)` и `14%` с прозрачным.
 - Скругление `--radius: 26px`; у большой картинки и блока с кнопкой — в 2 и 1.5 раза больше.
 - Сайт сразу открывается в светлой теме.
+- Цвет можно сменить строкой `LAB.color` (красный `#dc2626`, синий `#2563eb`, зелёный `#16a34a`, оранжевый `#f97316`, фиолетовый `#7c3aed`; родной цвет — точный оттенок сайта). JavaScript ставит `--main` у `<html>`, только если цвет не родной: иначе правка `--main` в CSS перестала бы работать.
 
 ## Структура страницы
 
@@ -63,12 +64,14 @@
 8. **Подвал:** «© год «Игрушкин». Учебный сайт: все контакты вымышленные.» Год ставит JavaScript.
 9. **Окно заказа:** «Оформить заказ» — «Оставьте имя и телефон — мы перезвоним через 5 минут.», поля «Ваше имя», «Телефон», список «Что заказать» (товары), кнопка «Отправить».
 
-## Лаборатория (10 настроек для детей)
+## Лаборатория (настройки для детей)
 
-5 настроек — в начале `style.css` (`:root`), 5 — в начале `script.js` (объект `LAB`). Значения по умолчанию = обычный сайт.
+5 настроек — в начале `style.css` (`:root`), 7 — в начале `script.js` (объект `LAB`). Значения по умолчанию = обычный сайт.
 
 | Файл | Значение по умолчанию | Пример изменения |
 |---|---|---|
+| JS | `style: 'яркий и весёлый',` | стиль сайта: простой и аккуратный / яркий и весёлый / тёмный / современный / уютный |
+| JS | `color: 'зелёный',` | главный цвет: красный / синий / зелёный / оранжевый / фиолетовый |
 | CSS | `--main: #16a34a;` | Перекрась сайт в оранжевый цвет → `--main: #f97316;` |
 | CSS | `--accent: #facc15;` | Сделай второй цвет голубой → `--accent: #38bdf8;` |
 | CSS | `--radius: 26px;` | Сделай углы острыми → `--radius: 0px;` |
@@ -79,6 +82,18 @@
 | JS | `fallingEmoji: '',` | Включи дождь из 🧸 → `fallingEmoji: '🧸',` |
 | JS | `startDark: false,` | Включи тёмную тему → `startDark: true,` |
 | JS | `thanksText: 'Ура! Заказ принят 🎉',` | Поменяй сообщение после заказа → `thanksText: 'Спасибо, ждём вас снова! 😊',` |
+
+### Пять стилей (раздел 9 в конце CSS)
+
+Все пять стилей лежат в CSS, каждое правило начинается с `.style-<id>`; `script.js` ставит у `<body>` класс выбранного стиля (`LAB.style`, поиск по началу слова, поэтому подходят «Тёмный», «темный»). Не нашёлся — родной стиль сайта.
+
+| `LAB.style` | Класс | Что меняет |
+|---|---|---|
+| уютный | `style-cozy` | тёплые пятна на фоне, пунктирная рамка за фото, черта под заголовками, наклон карточки |
+| тёмный | `style-dark` | сразу тёмная тема, неоновое свечение кнопок и карточек, сетка на фоне, заголовок с градиентом |
+| современный | `style-modern` | заголовки капсом, строгие кнопки со стрелкой, высокие фото, полоса слева у карточки |
+| яркий и весёлый | `style-bright` | толстые обводки и «мультяшные» тени, цветные пятна, покачивающаяся наклейка |
+| простой и аккуратный | `style-clean` | тонкие рамки без теней, ровная подложка за фото |
 
 ## Поведение (script.js)
 
@@ -97,7 +112,7 @@
 - Карточки поднимаются при наведении, фото в карточке плавно приближается, значок преимущества поворачивается.
 - Поле ввода в стиле uiverse: подпись внутри поля уезжает вверх при вводе, фокус — рамка и мягкое свечение.
 - Большое фото покачивается вверх-вниз (`float`), наклейка повёрнута.
-- Особенности стиля «яркий и весёлый» — отдельный раздел 9 в конце CSS.
+- Родной стиль сайта — «яркий и весёлый», остальные четыре включаются строкой `LAB.style`.
 
 ### ⚠️ Важные места
 
@@ -143,9 +158,9 @@
   <!-- Значок вкладки — эмодзи, без отдельного файла -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧸</text></svg>">
   <!-- Подключаем оформление.
-       ?v=1 — номер версии: увеличиваем его после изменения CSS или JS,
+       ?v=2 — номер версии: увеличиваем его после изменения CSS или JS,
        чтобы браузер не брал старый файл из кэша -->
-  <link rel="stylesheet" href="style.css?v=1">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 
@@ -375,7 +390,7 @@
 
 <!-- ↑↑↑ Для CodePen: конец части для окна HTML ↑↑↑ -->
 
-<script src="script.js?v=1"></script>
+<script src="script.js?v=2"></script>
 </body>
 </html>
 ````
@@ -391,7 +406,7 @@
    0. Лаборатория — главные настройки внешнего вида
    1. Основа  2. Шапка  3. Кнопки  4. Главный экран
    5. Блоки  6. Окно заказа и сообщения  7. Анимации
-   8. Телефон  9. Особенности стиля «яркий и весёлый»
+   8. Телефон  9. Пять стилей сайта: включаются строкой style в LAB (script.js)
    ============================================================ */
 
 /* Шрифты Google Fonts. Подключаем здесь, а не в HTML, чтобы они работали и в CodePen */
@@ -785,28 +800,111 @@ a.contact-card:hover { transform: translateY(-4px); }
   .theme-switch { display: none; }
 }
 
-/* ===== 9. ОСОБЕННОСТИ СТИЛЯ «ЯРКИЙ И ВЕСЁЛЫЙ» =====
+/* ===== 9. СТИЛЬ «УЮТНЫЙ» =====
+   Тёплые пятна на фоне, пунктирная рамка у картинки, мягкие формы */
+.style-cozy .hero {
+  background: radial-gradient(circle at 85% 15%, var(--main-soft), transparent 40%),
+  radial-gradient(circle at 5% 95%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 40%);
+}
+.style-cozy .hero-picture::before {
+  content: ''; position: absolute; inset: 18px -18px -18px 18px; z-index: -1;
+  border: 3px dashed var(--accent); border-radius: calc(var(--radius) * 2);
+}
+.style-cozy .about-card { border-top: none; border: 3px dashed var(--main-soft); }
+.style-cozy .adv-icon { background: color-mix(in srgb, var(--accent) 30%, transparent); }
+.style-cozy .product:hover { transform: translateY(-8px) rotate(-1deg); }
+.style-cozy .section-title::after {
+  content: ''; display: block; width: 70px; height: 6px; margin-top: 14px; border-radius: 6px;
+  background: var(--accent);
+}
+.style-cozy .section-head .section-title::after { margin-inline: auto; }
+
+/* ===== 9. СТИЛЬ «ТЁМНЫЙ» =====
+   Неоновое свечение, сетка на фоне, заголовок с градиентом */
+.style-dark .hero {
+  background:
+  radial-gradient(circle at 75% 30%, color-mix(in srgb, var(--main) 30%, transparent), transparent 45%),
+  linear-gradient(var(--main-soft) 1px, transparent 1px) 0 0 / 44px 44px,
+  linear-gradient(90deg, var(--main-soft) 1px, transparent 1px) 0 0 / 44px 44px;
+}
+.style-dark .hero-title {
+  background: linear-gradient(90deg, var(--main), var(--accent)); -webkit-background-clip: text;
+  background-clip: text; color: transparent;
+}
+.style-dark .logo { text-shadow: 0 0 14px var(--main); }
+/* Неоновая кнопка в стиле uiverse */
+.style-dark .btn { box-shadow: 0 0 18px color-mix(in srgb, var(--main) 60%, transparent); }
+.style-dark .btn:hover { transform: translateY(-2px); box-shadow: 0 0 34px var(--main), 0 0 8px var(--accent); }
+.style-dark .btn:active { transform: scale(0.97); box-shadow: 0 0 10px var(--main); }
+.style-dark .btn-ghost { box-shadow: inset 0 0 0 2px var(--main), 0 0 18px color-mix(in srgb, var(--main) 40%, transparent); }
+.style-dark .btn-ghost:hover { box-shadow: inset 0 0 0 2px var(--main), 0 0 24px var(--main); }
+.style-dark .btn-light { box-shadow: 0 0 24px rgba(255, 255, 255, 0.35); }
+.style-dark .product, .style-dark .adv-card, .style-dark .about-card, .style-dark .contact-card { border: 1px solid color-mix(in srgb, var(--main) 35%, transparent); }
+.style-dark .product:hover, .style-dark .adv-card:hover { box-shadow: 0 0 32px color-mix(in srgb, var(--main) 50%, transparent); }
+.style-dark .hero-picture img { box-shadow: 0 0 60px color-mix(in srgb, var(--main) 55%, transparent); }
+.style-dark .tag, .style-dark .sticker { box-shadow: 0 0 18px var(--accent); }
+.style-dark .cta-box { background: linear-gradient(135deg, var(--main-dark), var(--main) 60%, var(--accent)); }
+
+/* ===== 9. СТИЛЬ «СОВРЕМЕННЫЙ» =====
+   Крупные буквы, строгие формы, высокие фото, стрелка на кнопке */
+.style-modern .hero-title, .style-modern .section-title { text-transform: uppercase; letter-spacing: -0.02em; }
+.style-modern .badge { background: var(--accent); color: var(--on-accent); border-radius: var(--radius); }
+.style-modern .hero-picture img { animation: none; aspect-ratio: 4 / 4.4; }
+.style-modern .product-image { aspect-ratio: 4 / 5; }
+.style-modern .btn { box-shadow: none; }
+.style-modern .btn:hover { box-shadow: 0 14px 28px var(--main-soft); background: var(--main-dark); }
+.style-modern .btn:active { transform: translateY(1px); box-shadow: none; }
+.style-modern .btn-ghost, .style-modern .btn-ghost:hover, .style-modern .btn-ghost:active { background: transparent; box-shadow: inset 0 0 0 2px var(--main); }
+/* Стрелка выезжает при наведении */
+.style-modern .btn:not(.btn-ghost)::after { content: '→'; max-width: 0; overflow: hidden; transition: max-width var(--speed), margin var(--speed); }
+.style-modern .btn:not(.btn-ghost):hover::after { max-width: 20px; margin-left: 8px; }
+.style-modern .btn-light:hover { background: #fff; }
+.style-modern .about-card { border-top: none; border-left: 6px solid var(--main); }
+.style-modern .cta-box { background: linear-gradient(120deg, var(--accent), var(--main)); }
+.style-modern .sticker { transform: none; }
+
+/* ===== 9. СТИЛЬ «ЯРКИЙ И ВЕСЁЛЫЙ» =====
    Толстые обводки, «мультяшные» тени, цветные пятна, игрушечные наклоны */
-.hero {
+.style-bright .hero {
   background:
   radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 30%),
   radial-gradient(circle at 0% 100%, var(--main-soft), transparent 40%),
   radial-gradient(circle at 50% 50%, color-mix(in srgb, #f472b6 18%, transparent), transparent 35%);
 }
-.hero-title { text-shadow: 4px 4px 0 var(--accent); }
-.btn, .product, .adv-card, .about-card, .contact-card, .hero-picture img, .sticker, .cta-box, .badge {
+.style-bright .hero-title { text-shadow: 4px 4px 0 var(--accent); }
+.style-bright .btn, .style-bright .product, .style-bright .adv-card, .style-bright .about-card, .style-bright .contact-card, .style-bright .hero-picture img, .style-bright .sticker, .style-bright .cta-box, .style-bright .badge {
   border: 3px solid var(--text); box-shadow: 6px 6px 0 var(--text);
 }
-.btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--text); }
-.btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--text); }
-.btn-ghost, .btn-ghost:hover, .btn-ghost:active { background: var(--surface); color: var(--text); }
-.btn-light { color: var(--text); }
-.adv-card:hover { transform: translateY(-6px) rotate(-2deg); }
-.product:hover { transform: translateY(-6px) rotate(1.5deg); }
-.adv-card:nth-child(2) .adv-icon { background: color-mix(in srgb, var(--accent) 45%, transparent); }
-.adv-card:nth-child(3) .adv-icon { background: color-mix(in srgb, #f472b6 30%, transparent); }
-.sticker { animation: wiggle 2s ease-in-out infinite; }
+.style-bright .btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--text); }
+.style-bright .btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--text); }
+.style-bright .btn-ghost, .style-bright .btn-ghost:hover, .style-bright .btn-ghost:active { background: var(--surface); color: var(--text); }
+.style-bright .btn-light { color: var(--text); }
+.style-bright .adv-card:hover { transform: translateY(-6px) rotate(-2deg); }
+.style-bright .product:hover { transform: translateY(-6px) rotate(1.5deg); }
+.style-bright .adv-card:nth-child(2) .adv-icon { background: color-mix(in srgb, var(--accent) 45%, transparent); }
+.style-bright .adv-card:nth-child(3) .adv-icon { background: color-mix(in srgb, #f472b6 30%, transparent); }
+.style-bright .sticker { animation: wiggle 2s ease-in-out infinite; }
 @keyframes wiggle { 50% { transform: rotate(4deg) scale(1.05); } }
+
+/* ===== 9. СТИЛЬ «ПРОСТОЙ И АККУРАТНЫЙ» =====
+   Тонкие рамки, мало теней, ровные формы */
+.style-clean .hero-title { letter-spacing: -0.03em; }
+.style-clean .hero-picture img { animation: none; border-radius: var(--radius); }
+.style-clean .hero-picture::before {
+  content: ''; position: absolute; inset: -16px 16px 16px -16px; z-index: -1;
+  border-radius: var(--radius); background: var(--main-soft);
+}
+.style-clean .sticker { transform: none; }
+.style-clean .btn { box-shadow: none; }
+.style-clean .btn:hover { background: var(--main-dark); box-shadow: 0 10px 24px var(--main-soft); }
+.style-clean .btn:active { transform: translateY(1px); box-shadow: none; }
+.style-clean .btn-ghost, .style-clean .btn-ghost:hover, .style-clean .btn-ghost:active { box-shadow: inset 0 0 0 2px var(--main); }
+.style-clean .btn-ghost:hover { background: var(--main-soft); }
+.style-clean .btn-light:hover { background: #fff; }
+.style-clean .product, .style-clean .adv-card, .style-clean .about-card, .style-clean .contact-card { box-shadow: none; border: 1px solid color-mix(in srgb, var(--muted) 25%, transparent); }
+.style-clean .product:hover, .style-clean .adv-card:hover { box-shadow: var(--shadow); }
+.style-clean .about-card { border-top: 4px solid var(--main); }
+.style-clean .adv-icon { border-radius: var(--radius); }
 ````
 
 ### `script.js`
@@ -828,12 +926,27 @@ a.contact-card:hover { transform: translateY(-4px); }
 // ===== 0. ЛАБОРАТОРИЯ САЙТА 🧪 =====
 // Поменяйте значение и посмотрите на сайт. Цвета, углы и шрифты — в начале style.css.
 const LAB = {
+  style: 'яркий и весёлый',   // стиль: простой и аккуратный / яркий и весёлый / тёмный / современный / уютный
+  color: 'зелёный',   // главный цвет: красный / синий / зелёный / оранжевый / фиолетовый
   siteName: 'Игрушкин',         // название: шапка, главный экран, вкладка
   sticker: 'Ура, игрушки! 🎉',   // надпись на наклейке у большой картинки
   fallingEmoji: '',              // эмодзи-дождь на главном экране, например '🧸' ('' — без дождя)
   startDark: false,             // true — сайт сразу открывается в тёмной теме
   thanksText: 'Ура! Заказ принят 🎉', // сообщение после отправки формы
 };
+
+// Варианты для LAB.style и LAB.color. Ищем по началу слова,
+// поэтому подойдут и «Тёмный», и «темный», и «синего цвета»
+const STYLES = { 'прост': 'clean', 'ярк': 'bright', 'тём': 'dark', 'тем': 'dark', 'соврем': 'modern', 'уют': 'cozy' };
+const COLORS = { 'красн': '#dc2626', 'син': '#2563eb', 'зел': '#16a34a', 'оранж': '#f97316', 'фиол': '#7c3aed' };
+
+function findOption(options, text) {
+  const word = String(text).trim().toLowerCase();
+  for (const start in options) {
+    if (word.startsWith(start)) return options[start];
+  }
+  return null; // такого варианта нет
+}
 
 // ===== 1. ПОМОЩНИКИ И ЭЛЕМЕНТЫ СТРАНИЦЫ =====
 // Короткие имена для поиска элементов: $ — один элемент, $$ — все подходящие
@@ -1018,7 +1131,12 @@ function applyLab() {
   $$('[data-lab="name"]').forEach(function (el) { el.textContent = LAB.siteName; });
   $$('[data-lab="sticker"]').forEach(function (el) { el.textContent = LAB.sticker; });
   document.title = LAB.siteName + ' — магазин игрушек';
-  if (LAB.startDark) document.body.classList.add('dark');
+  const style = findOption(STYLES, LAB.style) || 'bright'; // стиль не найден — родной стиль сайта
+  document.body.classList.add('style-' + style);
+  if (LAB.startDark || style === 'dark') document.body.classList.add('dark');
+  // Другой цвет ставим, только если он отличается от родного, чтобы работала и --main в style.css
+  const color = findOption(COLORS, LAB.color);
+  if (color && color !== '#16a34a') document.documentElement.style.setProperty('--main', color);
   if (LAB.fallingEmoji) startRain(LAB.fallingEmoji);
 }
 
