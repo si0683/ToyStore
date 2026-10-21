@@ -1,0 +1,223 @@
+<!-- Файл для CodePen: вставьте его ЦЕЛИКОМ в index.pen.html (или в окно HTML).
+     style.css и script.js CodePen подключит сам.
+     Файл создаётся скриптом tools/build.py из index.html — не редактируйте вручную. -->
+
+<!-- ===== ШАПКА: логотип, меню, тема, корзина ===== -->
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a class="logo" href="#top"><span class="logo-icon">🧸</span><span data-lab="name">Игрушкин</span></a>
+    <nav class="nav" id="nav">
+      <a href="#about">О нас</a>
+      <a href="#advantages">Преимущества</a>
+      <a href="#products">Игрушки</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header-actions">
+      <!-- Переключатель темы: ☀️ светлая / 🌙 тёмная -->
+      <button class="theme-switch" id="themeSwitch" type="button" aria-label="Сменить тему"><span class="theme-knob"></span></button>
+      <button class="cart" id="cartButton" type="button" aria-label="Корзина">🛒<span class="cart-count" id="cartCount">0</span></button>
+      <!-- Кнопка меню для телефона (три полоски) -->
+      <button class="burger" id="burger" type="button" aria-label="Открыть меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== 1. ГЛАВНЫЙ ЭКРАН: название, слоган, картинка, кнопка ===== -->
+  <section class="hero" id="top">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <span class="badge">🎈 Радость для детей и взрослых</span>
+        <h1 class="hero-title" data-lab="name">Игрушкин</h1>
+        <p class="hero-slogan">Яркие игрушки, от которых улыбаются все!</p>
+        <div class="hero-buttons">
+          <button class="btn" type="button" data-order="">Купить</button>
+          <a class="btn btn-ghost" href="#products">Игрушки</a>
+        </div>
+        <ul class="facts">
+          <li><b>3000+</b><span>игрушек</span></li>
+          <li><b>0+</b><span>для всех возрастов</span></li>
+          <li><b>🎁</b><span>подарочная упаковка</span></li>
+        </ul>
+      </div>
+      <div class="hero-picture">
+        <img src="https://images.unsplash.com/photo-1558060370-d644479cb6f7?w=1100&q=80&auto=format&fit=crop" alt="Разноцветные игрушки на столе">
+        <span class="sticker" data-lab="sticker">Ура, игрушки! 🎉</span>
+      </div>
+    </div>
+    <!-- Сюда JavaScript добавляет эмодзи-дождь (LAB.fallingEmoji) -->
+    <div class="rain" id="rain" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===== 2. О НАС: что это и чем полезно ===== -->
+  <section class="section about reveal" id="about">
+    <div class="container about-inner">
+      <div>
+        <span class="label">О нас</span>
+        <h2 class="section-title">Магазин хорошего настроения</h2>
+        <p>«Игрушкин» — магазин весёлых и безопасных игрушек для детей любого возраста.</p>
+        <p>Мы выбираем игрушки, которые развивают фантазию, учат новому и просто радуют каждый день.</p>
+      </div>
+      <div class="about-card">
+        <h3>Чем мы полезны</h3>
+        <ul class="checks">
+          <li>Подарок на любой праздник</li>
+          <li>Развивающие игрушки по возрасту</li>
+          <li>Безопасные материалы</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. ПРЕИМУЩЕСТВА ===== -->
+  <section class="section section-alt reveal" id="advantages">
+    <div class="container">
+      <div class="section-head">
+        <span class="label">Преимущества</span>
+        <h2 class="section-title">Почему у нас весело</h2>
+      </div>
+      <div class="grid-3">
+      <article class="adv-card">
+        <div class="adv-icon">✅</div>
+        <h3>Безопасно</h3>
+        <p>Все игрушки проверены и сделаны из безопасных материалов.</p>
+      </article>
+      <article class="adv-card">
+        <div class="adv-icon">🧠</div>
+        <h3>Развивает</h3>
+        <p>Конструкторы и головоломки учат думать и творить.</p>
+      </article>
+      <article class="adv-card">
+        <div class="adv-icon">🎁</div>
+        <h3>Упакуем в подарок</h3>
+        <p>Красивая коробка и бант — бесплатно.</p>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 4. ТОВАРЫ / УСЛУГИ с картинками ===== -->
+  <section class="section reveal" id="products">
+    <div class="container">
+      <div class="section-head">
+        <span class="label">Игрушки</span>
+        <h2 class="section-title">Любимые игрушки</h2>
+        <p>Что выбирают дети чаще всего</p>
+      </div>
+      <div class="grid-3">
+      <article class="product">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1602734846297-9299fc2d4703?w=900&q=80&auto=format&fit=crop" alt="Плюшевый мишка с бабочкой" loading="lazy">
+          <span class="tag">Хит</span>
+        </div>
+        <div class="product-body">
+          <h3>Плюшевые мишки</h3>
+          <p>Мягкие и очень обнимательные</p>
+          <div class="product-footer">
+            <span class="price">1 490 ₽</span>
+            <button class="btn btn-small" type="button" data-add="Плюшевые мишки">В корзину</button>
+          </div>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=900&q=80&auto=format&fit=crop" alt="Разноцветные детали конструктора" loading="lazy">
+          <span class="tag">Развивает</span>
+        </div>
+        <div class="product-body">
+          <h3>Конструкторы</h3>
+          <p>Строй замки, машины и роботов</p>
+          <div class="product-footer">
+            <span class="price">2 490 ₽</span>
+            <button class="btn btn-small" type="button" data-add="Конструкторы">В корзину</button>
+          </div>
+        </div>
+      </article>
+      <article class="product">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=900&q=80&auto=format&fit=crop" alt="Деревянная железная дорога" loading="lazy">
+          <span class="tag">Эко</span>
+        </div>
+        <div class="product-body">
+          <h3>Деревянные игрушки</h3>
+          <p>Поезда и домики из натурального дерева</p>
+          <div class="product-footer">
+            <span class="price">1 990 ₽</span>
+            <button class="btn btn-small" type="button" data-add="Деревянные игрушки">В корзину</button>
+          </div>
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. БЛОК С КНОПКОЙ ДЕЙСТВИЯ ===== -->
+  <section class="section reveal" id="order">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Выберем подарок?</h2>
+        <p>Оставьте заявку — поможем подобрать игрушку по возрасту!</p>
+        <button class="btn btn-light" type="button" data-order="">Купить</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 6. КОНТАКТЫ ===== -->
+  <section class="section section-alt reveal" id="contacts">
+    <div class="container">
+      <div class="section-head">
+        <span class="label">Контакты</span>
+        <h2 class="section-title">Свяжитесь с нами</h2>
+        <p>Не знаете, что подарить? Напишите — подскажем самую подходящую игрушку!</p>
+      </div>
+      <div class="contacts-grid">
+        <a class="contact-card" href="tel:+79003332211"><span class="contact-icon">📞</span><span><small>Телефон</small><b>+7 (900) 333-22-11</b></span></a>
+        <a class="contact-card" href="mailto:toys@example.com"><span class="contact-icon">✉️</span><span><small>Почта</small><b>toys@example.com</b></span></a>
+        <div class="contact-card"><span class="contact-icon">📍</span><span><small>Адрес</small><b>г. Москва, ул. Весёлая, 7</b></span></div>
+        <div class="contact-card"><span class="contact-icon">🕒</span><span><small>Часы работы</small><b>Ежедневно 9:00–21:00</b></span></div>
+      </div>
+      <div class="contacts-bottom">
+        <a class="social social-vk" href="https://vk.com/" target="_blank" rel="noopener" data-tip="ВКонтакте">VK</a>
+        <a class="social social-max" href="https://max.ru/" target="_blank" rel="noopener" data-tip="Мессенджер MAX">MAX</a>
+        <button class="btn" type="button" data-order="">Купить</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">© <span id="year">2026</span> «<span data-lab="name">Игрушкин</span>». Учебный сайт: все контакты вымышленные.</div>
+</footer>
+
+<!-- ===== ОКНО ЗАКАЗА (появляется по кнопке) ===== -->
+<div class="modal" id="modal">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" type="button" data-close aria-label="Закрыть">✕</button>
+    <h3 id="modalTitle">Оформить заказ</h3>
+    <p class="modal-text">Оставьте имя и телефон — мы перезвоним через 5 минут.</p>
+    <form id="orderForm" novalidate>
+      <div class="field">
+        <input id="clientName" type="text" placeholder=" " autocomplete="name">
+        <label for="clientName">Ваше имя</label>
+      </div>
+      <div class="field">
+        <input id="clientPhone" type="tel" placeholder=" " autocomplete="tel">
+        <label for="clientPhone">Телефон</label>
+      </div>
+      <div class="field">
+        <select id="product">
+          <option>Плюшевые мишки</option>
+          <option>Конструкторы</option>
+          <option>Деревянные игрушки</option>
+        </select>
+        <label for="product">Что заказать</label>
+      </div>
+      <button class="btn btn-wide" type="submit">Отправить</button>
+    </form>
+  </div>
+</div>
+
+<!-- Всплывающее сообщение внизу экрана -->
+<div class="toast" id="toast" role="status"></div>

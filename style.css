@@ -1,0 +1,424 @@
+/* ============================================================
+   Сайт «Игрушкин» — магазин игрушек. Стиль: яркий и весёлый, цвет: зелёный.
+   Кнопки, карточки, поля ввода и переключатель сделаны в стиле
+   библиотеки uiverse.io — готовых элементов на HTML и CSS.
+   Разделы:
+   0. Лаборатория — главные настройки внешнего вида
+   1. Основа  2. Шапка  3. Кнопки  4. Главный экран
+   5. Блоки  6. Окно заказа и сообщения  7. Анимации
+   8. Телефон  9. Особенности стиля «яркий и весёлый»
+   ============================================================ */
+
+/* Шрифты Google Fonts. Подключаем здесь, а не в HTML, чтобы они работали и в CodePen */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@700;800&family=Nunito:wght@400;600;800&display=swap');
+
+/* ===== 0. ЛАБОРАТОРИЯ САЙТА 🧪 =====
+   Поменяйте значение — и весь сайт изменится. */
+:root {
+  --main: #16a34a;             /* главный цвет: кнопки, заголовки, значки */
+  --accent: #facc15;           /* второй цвет: наклейки и метки */
+  --radius: 26px;              /* скругление углов (0px — острые углы) */
+  --font-title: 'Rubik', sans-serif;  /* шрифт заголовков */
+  --hero-title: 4.6rem;          /* размер большого заголовка */
+}
+
+/* ===== 1. ОСНОВА ===== */
+/* Цвета светлой темы и цвета, которые считаются сами из главного */
+body {
+  --bg: #f0fdf4;
+  --surface: #ffffff;
+  --text: #14301f;
+  --muted: #4d7a5e;
+  --on-accent: #14301f;          /* цвет текста на втором цвете */
+  --font-text: 'Nunito', sans-serif;
+  --main-dark: color-mix(in srgb, var(--main) 72%, black);
+  --main-soft: color-mix(in srgb, var(--main) 14%, transparent);
+  --shadow: 0 12px 32px color-mix(in srgb, var(--text) 12%, transparent);
+  --speed: 0.3s;
+}
+
+/* Тёмная тема: включается переключателем в шапке */
+body.dark { --bg: #0a1a10; --surface: #12281a; --text: #dcfce7; --muted: #8fc4a3; --shadow: 0 12px 32px rgba(0, 0, 0, 0.45); }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+body {
+  margin: 0; font-family: var(--font-text); font-size: 17px; line-height: 1.6;
+  color: var(--text); background: var(--bg); overflow-x: hidden;
+  transition: background var(--speed), color var(--speed);
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3 { margin: 0 0 0.5em; font-family: var(--font-title); font-weight: 800; line-height: 1.15; }
+
+.container { width: min(1140px, 100% - 32px); margin-inline: auto; }
+.section { padding: 90px 0; }
+.section-alt { background: color-mix(in srgb, var(--main) 6%, var(--bg)); }
+
+/* ===== 2. ШАПКА ===== */
+.header {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(12px);
+  transition: box-shadow var(--speed);
+}
+.header.scrolled { box-shadow: var(--shadow); }
+.header-inner { display: flex; align-items: center; gap: 28px; height: 72px; }
+
+.logo {
+  display: flex; align-items: center; gap: 10px; font-family: var(--font-title);
+  font-weight: 800; font-size: 1.5rem; color: var(--main); white-space: nowrap;
+}
+.logo-icon { font-size: 1.8rem; transition: transform 0.6s; }
+.logo:hover .logo-icon { transform: rotate(360deg); }
+
+.nav { display: flex; gap: 28px; margin-left: auto; }
+.nav a { position: relative; font-weight: 700; }
+/* Линия под пунктом меню выезжает при наведении */
+.nav a::after {
+  content: ''; position: absolute; left: 0; bottom: -4px; width: 100%; height: 2px;
+  background: var(--main); transform: scaleX(0); transform-origin: right;
+  transition: transform var(--speed);
+}
+.nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.header-actions { display: flex; align-items: center; gap: 12px; }
+
+/* Переключатель темы в стиле uiverse: кружок едет вправо */
+.theme-switch {
+  position: relative; width: 58px; height: 32px; padding: 0; border: 2px solid var(--main-soft);
+  border-radius: 32px; background: var(--main-soft); cursor: pointer;
+}
+.theme-knob {
+  position: absolute; top: 2px; left: 2px; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--surface); box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); display: grid;
+  place-items: center; font-size: 13px; transition: transform var(--speed);
+}
+.theme-knob::before { content: '☀️'; }
+body.dark .theme-knob { transform: translateX(26px); }
+body.dark .theme-knob::before { content: '🌙'; }
+
+.cart {
+  position: relative; width: 46px; height: 46px; border: none; border-radius: 50%;
+  background: var(--main-soft); font-size: 1.3rem; cursor: pointer;
+  transition: transform var(--speed);
+}
+.cart:hover { transform: scale(1.08); }
+.cart.bump { animation: bump 0.4s; }
+.cart-count {
+  position: absolute; top: -4px; right: -4px; min-width: 21px; height: 21px; padding: 0 5px;
+  border-radius: 11px; background: var(--main); color: #fff; font-size: 0.75rem;
+  font-weight: 800; display: grid; place-items: center;
+}
+
+/* Бургер: три полоски превращаются в крестик */
+.burger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px; width: 44px;
+  height: 44px; padding: 10px; border: none; border-radius: 12px; background: var(--main-soft);
+  cursor: pointer;
+}
+.burger span { height: 3px; border-radius: 2px; background: var(--main); transition: transform var(--speed), opacity var(--speed); }
+.burger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ===== 3. КНОПКИ в стиле uiverse: объёмная кнопка с бликом ===== */
+.btn {
+  position: relative; overflow: hidden; display: inline-flex; align-items: center;
+  justify-content: center; padding: 14px 30px; border: none; border-radius: var(--radius);
+  background: var(--main); color: #fff; font: 800 1rem var(--font-text); cursor: pointer;
+  box-shadow: 0 6px 0 var(--main-dark), 0 12px 24px var(--main-soft);
+  transition: transform 0.15s, box-shadow 0.15s, background var(--speed);
+}
+/* Блик пробегает по кнопке при наведении */
+.btn::before {
+  content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: skewX(-20deg); transition: left 0.7s;
+}
+.btn:hover::before { left: 140%; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0 var(--main-dark), 0 16px 30px var(--main-soft); }
+.btn:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--main-dark); }
+
+.btn-ghost { background: transparent; color: var(--main); box-shadow: inset 0 0 0 2px var(--main); }
+.btn-ghost:hover { background: var(--main-soft); box-shadow: inset 0 0 0 2px var(--main); }
+.btn-ghost:active { transform: translateY(1px); box-shadow: inset 0 0 0 2px var(--main); }
+.btn-light { background: #fff; color: var(--main); box-shadow: 0 6px 0 rgba(0, 0, 0, 0.18); }
+.btn-small { padding: 10px 18px; font-size: 0.9rem; }
+.btn-wide { width: 100%; margin-top: 6px; }
+
+/* ===== 4. ГЛАВНЫЙ ЭКРАН ===== */
+.hero { position: relative; overflow: hidden; padding: 60px 0 90px; }
+.hero-inner { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+.badge {
+  display: inline-block; margin-bottom: 18px; padding: 8px 16px; border-radius: 999px;
+  background: var(--main-soft); color: var(--main); font-weight: 800; font-size: 0.9rem;
+}
+.hero-title { font-size: min(var(--hero-title), 14vw); color: var(--main); margin-bottom: 16px; }
+.hero-slogan { max-width: 30em; margin: 0 0 30px; font-size: 1.25rem; color: var(--muted); }
+.hero-buttons { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 40px; }
+.facts { display: flex; flex-wrap: wrap; gap: 16px 40px; margin: 0; padding: 0; list-style: none; }
+.facts b { display: block; font-size: 1.5rem; }
+.facts span { color: var(--muted); font-size: 0.9rem; }
+
+/* isolation: украшения ::before рисуются под картинкой, но над фоном */
+.hero-picture { position: relative; isolation: isolate; }
+.hero-picture img {
+  width: 100%; aspect-ratio: 1 / 1.05; object-fit: cover;
+  border-radius: calc(var(--radius) * 2); box-shadow: var(--shadow);
+  animation: float 6s ease-in-out infinite;
+}
+.sticker {
+  position: absolute; left: -20px; bottom: 40px; padding: 14px 20px;
+  border-radius: var(--radius); background: var(--accent); color: var(--on-accent);
+  font-weight: 800; box-shadow: var(--shadow); transform: rotate(-6deg);
+}
+
+/* Эмодзи-дождь */
+.rain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.rain span { position: absolute; top: -60px; animation: fall linear infinite; }
+
+/* ===== 5. БЛОКИ ===== */
+.label {
+  display: inline-block; margin-bottom: 10px; color: var(--main); font-weight: 800;
+  font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+}
+/* Размер заголовка подстраивается под ширину экрана; длинное слово переносится */
+.section-title { font-size: clamp(1.6rem, 7vw, 3rem); overflow-wrap: break-word; }
+.section-head { max-width: 640px; margin: 0 auto 50px; text-align: center; }
+.section-head p { margin: 0; color: var(--muted); }
+
+.about-inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 50px; align-items: center; }
+.about p { color: var(--muted); font-size: 1.1rem; }
+.about-card {
+  padding: 36px; border-radius: var(--radius); border-top: 6px solid var(--main);
+  background: var(--surface); box-shadow: var(--shadow);
+}
+.about-card h3 { font-size: 1.5rem; }
+.checks { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.checks li { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+.checks li::before {
+  content: '✓'; flex: none; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--main); color: #fff; display: grid; place-items: center;
+}
+
+/* Сетка карточек: 3 в ряд, на узком экране — меньше */
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; }
+
+.adv-card {
+  padding: 34px 28px; border-radius: var(--radius); background: var(--surface);
+  box-shadow: var(--shadow); text-align: center;
+  transition: transform var(--speed), box-shadow var(--speed);
+}
+.adv-card:hover { transform: translateY(-8px); }
+.adv-icon {
+  width: 78px; height: 78px; margin: 0 auto 18px; border-radius: 50%;
+  background: var(--main-soft); display: grid; place-items: center; font-size: 2.2rem;
+  transition: transform 0.5s;
+}
+.adv-card:hover .adv-icon { transform: rotate(-10deg) scale(1.12); }
+.adv-card h3 { font-size: 1.35rem; }
+.adv-card p { margin: 0; color: var(--muted); }
+
+/* Карточка товара в стиле uiverse: поднимается, картинка приближается */
+.product {
+  display: flex; flex-direction: column; overflow: hidden; border-radius: var(--radius);
+  background: var(--surface); box-shadow: var(--shadow);
+  transition: transform var(--speed), box-shadow var(--speed);
+}
+.product:hover { transform: translateY(-8px); }
+.product-image { position: relative; overflow: hidden; aspect-ratio: 4 / 3; }
+.product-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+.product:hover .product-image img { transform: scale(1.08); }
+.tag {
+  position: absolute; top: 14px; left: 14px; padding: 6px 14px; border-radius: 999px;
+  background: var(--accent); color: var(--on-accent); font-weight: 800; font-size: 0.8rem;
+}
+.product-body { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 24px; }
+.product-body h3 { margin: 0; font-size: 1.4rem; }
+.product-body p { flex: 1; margin: 0; color: var(--muted); }
+.product-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+.price { font-size: 1.3rem; font-weight: 800; color: var(--main); }
+
+.cta-box {
+  position: relative; overflow: hidden; padding: 70px 30px;
+  border-radius: calc(var(--radius) * 1.5);
+  background: linear-gradient(135deg, var(--main), var(--main-dark)); color: #fff;
+  text-align: center;
+}
+/* Два полупрозрачных круга для красоты */
+.cta-box::before, .cta-box::after {
+  content: ''; position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+.cta-box::before { width: 260px; height: 260px; top: -90px; left: -70px; }
+.cta-box::after { width: 180px; height: 180px; bottom: -60px; right: -40px; }
+.cta-box h2 { font-size: clamp(1.6rem, 7vw, 3rem); overflow-wrap: break-word; }
+.cta-box p { max-width: 34em; margin: 0 auto 30px; font-size: 1.15rem; opacity: 0.92; }
+
+.contacts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.contact-card {
+  display: flex; align-items: center; gap: 14px; padding: 22px; border-radius: var(--radius);
+  background: var(--surface); box-shadow: var(--shadow); transition: transform var(--speed);
+}
+a.contact-card:hover { transform: translateY(-4px); }
+.contact-icon {
+  flex: none; width: 48px; height: 48px; border-radius: 50%; background: var(--main-soft);
+  display: grid; place-items: center; font-size: 1.4rem;
+}
+.contact-card small { display: block; color: var(--muted); }
+.contact-card b { font-size: 0.95rem; overflow-wrap: anywhere; }
+
+.contacts-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 16px; margin-top: 40px; }
+/* Кнопки соцсетей с подсказкой при наведении (как на uiverse) */
+.social {
+  position: relative; width: 56px; height: 56px; border-radius: 50%; display: grid;
+  place-items: center; color: #fff; font-weight: 800; transition: transform var(--speed);
+}
+.social-vk { background: #0077ff; }
+.social-max { background: linear-gradient(135deg, #2f80ff, #a646ff); font-size: 0.85rem; }
+.social:hover { transform: translateY(-4px) scale(1.06); }
+.social::after {
+  content: attr(data-tip); position: absolute; bottom: calc(100% + 10px); left: 50%;
+  padding: 6px 10px; border-radius: 8px; background: var(--text); color: var(--bg);
+  font-size: 0.8rem; white-space: nowrap; opacity: 0; pointer-events: none;
+  transform: translate(-50%, 6px); transition: 0.25s;
+}
+.social:hover::after { opacity: 1; transform: translate(-50%, 0); }
+
+.footer { padding: 30px 0; color: var(--muted); text-align: center; font-size: 0.9rem; }
+
+/* ===== 6. ОКНО ЗАКАЗА И СООБЩЕНИЯ ===== */
+.modal {
+  position: fixed; inset: 0; z-index: 100; display: none; align-items: center;
+  justify-content: center; padding: 16px; background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+}
+.modal.open { display: flex; animation: fade 0.25s; }
+.modal-box {
+  position: relative; width: min(440px, 100%); padding: 36px 30px 30px;
+  border-radius: var(--radius); background: var(--surface);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3); animation: pop 0.3s;
+}
+.modal-box h3 { font-size: 1.7rem; margin-right: 30px; }
+.modal-text { margin: 0 0 22px; color: var(--muted); }
+.modal-close {
+  position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border: none;
+  border-radius: 50%; background: var(--main-soft); color: var(--text); font-size: 1rem;
+  cursor: pointer; transition: transform var(--speed);
+}
+.modal-close:hover { transform: rotate(90deg); }
+
+/* Поле ввода в стиле uiverse: подпись уезжает вверх */
+.field { position: relative; margin-bottom: 16px; }
+.field input, .field select {
+  width: 100%; padding: 22px 16px 8px;
+  border: 2px solid color-mix(in srgb, var(--muted) 35%, transparent);
+  border-radius: calc(var(--radius) / 2); background: var(--bg); color: var(--text);
+  font: 600 1rem var(--font-text); outline: none;
+  transition: border-color var(--speed), box-shadow var(--speed);
+}
+.field input:focus, .field select:focus { border-color: var(--main); box-shadow: 0 0 0 4px var(--main-soft); }
+.field label { position: absolute; top: 15px; left: 18px; color: var(--muted); pointer-events: none; transition: 0.2s; }
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label,
+.field select + label { top: 5px; font-size: 0.75rem; color: var(--main); }
+.field.error input { border-color: #e11d48; animation: shake 0.3s; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 200; max-width: calc(100% - 32px);
+  padding: 14px 24px; border-radius: var(--radius); background: var(--text); color: var(--bg);
+  font-weight: 700; text-align: center; box-shadow: var(--shadow);
+  transform: translate(-50%, 200%); transition: transform 0.4s;
+}
+.toast.show { transform: translate(-50%, 0); }
+
+.confetti { position: fixed; top: 50%; left: 50%; z-index: 300; font-size: 1.8rem; pointer-events: none; animation: boom 1.4s ease-out forwards; }
+
+/* ===== 7. АНИМАЦИИ ===== */
+/* Блоки плавно выезжают при прокрутке. Класс js ставит script.js:
+   без JavaScript блоки просто видны сразу */
+.js .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s, transform 0.8s; }
+.js .reveal.visible { opacity: 1; transform: none; }
+
+@keyframes float { 50% { transform: translateY(-12px); } }
+@keyframes fall { to { transform: translateY(1200px) rotate(360deg); } }
+@keyframes bump { 50% { transform: scale(1.3); } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes pop { from { opacity: 0; transform: scale(0.9) translateY(20px); } }
+@keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+@keyframes boom { to { opacity: 0; transform: translate(var(--x), var(--y)) rotate(var(--r)); } }
+
+/* ===== 8. ТЕЛЕФОН И ПЛАНШЕТ ===== */
+@media (max-width: 960px) {
+  .hero-inner, .about-inner { grid-template-columns: 1fr; }
+  .hero-picture { width: min(520px, 100%); margin: 0 auto; }
+  .contacts-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Меню прячется в бургер, когда пункты уже не помещаются в шапку */
+@media (max-width: 900px) {
+  .header-inner { gap: 12px; }
+  .header-actions { margin-left: auto; }
+  .burger { display: flex; }
+  /* Меню выпадает под шапкой */
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 16px 16px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity var(--speed), transform var(--speed), visibility var(--speed);
+  }
+  .nav.open { opacity: 1; visibility: visible; transform: none; }
+  .nav a { padding: 12px 0; border-bottom: 1px solid var(--main-soft); }
+  .nav a::after { display: none; }
+}
+
+@media (max-width: 760px) {
+  .section { padding: 64px 0; }
+  .hero { padding: 30px 0 64px; }
+  .hero-picture img { aspect-ratio: 4 / 3; }
+  .sticker { left: 10px; bottom: 14px; }
+  .contacts-grid { grid-template-columns: 1fr; }
+  .cta-box { padding: 50px 22px; }
+}
+
+@media (max-width: 400px) {
+  .logo { font-size: 1.1rem; gap: 6px; }
+  .logo-icon { font-size: 1.4rem; }
+  .theme-switch { display: none; }
+}
+
+/* ===== 9. ОСОБЕННОСТИ СТИЛЯ «ЯРКИЙ И ВЕСЁЛЫЙ» =====
+   Толстые обводки, «мультяшные» тени, цветные пятна, игрушечные наклоны */
+.hero {
+  background:
+  radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 30%),
+  radial-gradient(circle at 0% 100%, var(--main-soft), transparent 40%),
+  radial-gradient(circle at 50% 50%, color-mix(in srgb, #f472b6 18%, transparent), transparent 35%);
+}
+.hero-title { text-shadow: 4px 4px 0 var(--accent); }
+.btn, .product, .adv-card, .about-card, .contact-card, .hero-picture img, .sticker, .cta-box, .badge {
+  border: 3px solid var(--text); box-shadow: 6px 6px 0 var(--text);
+}
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--text); }
+.btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--text); }
+.btn-ghost, .btn-ghost:hover, .btn-ghost:active { background: var(--surface); color: var(--text); }
+.btn-light { color: var(--text); }
+.adv-card:hover { transform: translateY(-6px) rotate(-2deg); }
+.product:hover { transform: translateY(-6px) rotate(1.5deg); }
+.adv-card:nth-child(2) .adv-icon { background: color-mix(in srgb, var(--accent) 45%, transparent); }
+.adv-card:nth-child(3) .adv-icon { background: color-mix(in srgb, #f472b6 30%, transparent); }
+.sticker { animation: wiggle 2s ease-in-out infinite; }
+@keyframes wiggle { 50% { transform: rotate(4deg) scale(1.05); } }
